@@ -1,6 +1,6 @@
 {
   "name": "insert-text-pdf",
-  "version": "1.0.0",
+  "version": "1.0.3",
   "description": "Package for inserting a string into multiple pdfs",
   "main": "index.js",
   "scripts": {

@@ -22,7 +22,7 @@ const stringToAddPrompt = [
 
 const processPdf = async (pdfPath, stringToAdd) => {
     if (!fs.existsSync(path.join(pdfPath,`/parsed`))){
-        await fs.mkdir(path.join(pdfPath,`/parsed`));
+        await fs.mkdirSync(path.join(pdfPath,`/parsed`));
     }
     fs.readdir(pdfPath, (err, files) => {
         err ? console.log(err) : console.log(files);
@@ -31,7 +31,7 @@ const processPdf = async (pdfPath, stringToAdd) => {
                 let newPdf = new HummusRecipe(path.join(pdfPath,file), path.join(pdfPath,`/parsed/${file}.parsed.pdf`));
                 newPdf
                     .editPage(1)
-                    .text(stringToAdd, 330, 10,{
+                    .text(stringToAdd, 330, 30,{
                         color: "#000000",
                         size: 10,
                         align: "top right",
