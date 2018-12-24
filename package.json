@@ -1,7 +1,7 @@
 {
   "name": "insert-text-pdf",
-  "version": "1.0.3",
-  "description": "Package for inserting a string into multiple pdfs",
+  "version": "1.0.6",
+  "description": "CLI tool for inserting a string into multiple pdfs",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
