@@ -25,7 +25,7 @@ const processPdf = async (pdfPath, stringToAdd) => {
         await fs.mkdirSync(path.join(pdfPath,`/parsed`));
     }
     fs.readdir(pdfPath, (err, files) => {
-        err ? console.log(err) : console.log(files);
+        err ? console.log(err) : console.log(`Target Files: ${files} \r\n`);
         files.forEach((file) => {
             if (path.extname(file) === ".pdf") {
                 let newPdf = new HummusRecipe(path.join(pdfPath,file), path.join(pdfPath,`/parsed/${file}.parsed.pdf`));
@@ -48,7 +48,7 @@ cli
     .description("Inserts a specified string into the pdfs of a specified directory")
     .action(() => {
         prompt(stringToAddPrompt).then(answers => {
-            console.log(answers.stringToAdd);
+            console.log(`String being added to the PDFs: ${answers.stringToAdd} \r\n`);
             processPdf(answers.pdfPath, answers.stringToAdd)
         });
     });
