@@ -17,13 +17,32 @@ const stringToAddPrompt = [
         name: "pdfPath",
         message: "Enter the path to the pdfs.",
         default: "/pdfsToParse"
+    },
+    {
+        type: "input",
+        name: "x",
+        message: "Enter the x coordinate to place the text.",
+        default: 300
+    },
+    {
+        type: "input",
+        name: "y",
+        message: "Enter the y coordinate to place the text.",
+        default: 30
+    },
+    {
+        type: "input",
+        name: "fontSize",
+        message: "Enter a font size.",
+        default: 10
     }
 ];
 
-const processPdf = async (pdfPath, stringToAdd) => {
+const processPdf = async (pdfPath, stringToAdd, xCoord, yCoord, fontSize) => {
     if (!fs.existsSync(path.join(pdfPath,`/parsed`))){
         await fs.mkdirSync(path.join(pdfPath,`/parsed`));
     }
+    console.log(`Coordinates: ${xCoord},${yCoord} (x,y) \r\n`);
     fs.readdir(pdfPath, (err, files) => {
         err ? console.log(err) : console.log(`Target Files: ${files} \r\n`);
         files.forEach((file) => {
@@ -31,10 +50,9 @@ const processPdf = async (pdfPath, stringToAdd) => {
                 let newPdf = new HummusRecipe(path.join(pdfPath,file), path.join(pdfPath,`/parsed/${file}.parsed.pdf`));
                 newPdf
                     .editPage(1)
-                    .text(stringToAdd, 330, 30,{
+                    .text(stringToAdd, parseInt(xCoord), parseInt(yCoord),{
                         color: "#000000",
-                        size: 10,
-                        align: "top right",
+                        size: parseInt(fontSize)
                     })
                     .endPage()
                     .endPDF();
@@ -49,7 +67,7 @@ cli
     .action(() => {
         prompt(stringToAddPrompt).then(answers => {
             console.log(`String being added to the PDFs: ${answers.stringToAdd} \r\n`);
-            processPdf(answers.pdfPath, answers.stringToAdd)
+            processPdf(answers.pdfPath, answers.stringToAdd, answers.x, answers.y, answers.fontSize)
         });
     });
 
