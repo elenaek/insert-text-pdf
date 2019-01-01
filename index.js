@@ -47,15 +47,20 @@ const processPdf = async (pdfPath, stringToAdd, xCoord, yCoord, fontSize) => {
         err ? console.log(err) : console.log(`Target Files: ${files} \r\n`);
         files.forEach((file) => {
             if (path.extname(file) === ".pdf") {
-                let newPdf = new HummusRecipe(path.join(pdfPath,file), path.join(pdfPath,`/parsed/${file}.parsed.pdf`));
-                newPdf
-                    .editPage(1)
-                    .text(stringToAdd, parseInt(xCoord), parseInt(yCoord),{
-                        color: "#000000",
-                        size: parseInt(fontSize)
-                    })
-                    .endPage()
-                    .endPDF();
+                try{
+                    let newPdf = new HummusRecipe(path.join(pdfPath,file), path.join(pdfPath,`/parsed/${file}.parsed.pdf`));
+                    newPdf
+                        .editPage(1)
+                        .text(stringToAdd, parseInt(xCoord), parseInt(yCoord),{
+                            color: "#000000",
+                            size: parseInt(fontSize)
+                        })
+                        .endPage()
+                        .endPDF();
+                }
+                catch(err){
+                    console.log(`Error occurred on file: ${file}\r\n${err}\r\n\r\n`);
+                }
             }
         });
     });
